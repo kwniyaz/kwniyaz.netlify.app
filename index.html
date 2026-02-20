@@ -1,68 +1,109 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <title>Niyaz Hacker</title>
+<title>Niyaz Matrix System</title>
 
-  <style>
-    body {
-      background-color: black;
-      color: #00ff00;
-      font-family: monospace;
-      text-align: center;
-      margin-top: 100px;
-    }
+<style>
+body {
+  margin: 0;
+  background: black;
+  color: #00ff00;
+  font-family: monospace;
+  overflow: hidden;
+}
 
-    h1 {
-      font-size: 40px;
-      text-shadow: 0 0 10px #00ff00;
-    }
+canvas {
+  position: fixed;
+  top: 0;
+  left: 0;
+}
 
-    button {
-      background: black;
-      color: #00ff00;
-      border: 1px solid #00ff00;
-      padding: 10px 20px;
-      font-family: monospace;
-      font-size: 18px;
-    }
+.content {
+  position: absolute;
+  top: 50%;
+  width: 100%;
+  text-align: center;
+  transform: translateY(-50%);
+}
 
-    button:hover {
-      background: #00ff00;
-      color: black;
-    }
+h1 {
+  font-size: 40px;
+  text-shadow: 0 0 10px #00ff00;
+}
 
-    .blink {
-      animation: blink 1s infinite;
-    }
+button {
+  background: black;
+  color: #00ff00;
+  border: 1px solid #00ff00;
+  padding: 10px 20px;
+  font-size: 18px;
+}
 
-   _attachment@keyframes blink {
-      50% { opacity: 0; }
-    }
-  </style>
+button:hover {
+  background: #00ff00;
+  color: black;
+}
+</style>
 
 </head>
 <body>
 
-<h1>ACCESS GRANTED</h1>
+<canvas id="matrix"></canvas>
 
-<p>> Welcome to Niyaz system</p>
-<p>> Status: Online</p>
-<p>> User: Root</p>
+<div class="content">
+<h1>NIYAZ SYSTEM</h1>
+<p>> Initializing...</p>
+<p>> Access: Granted</p>
 
-<button onclick="hack()">Initialize Hack</button>
+<button onclick="startHack()">Start Hack</button>
 
-<p id="result" class="blink"></p>
+<p id="output"></p>
+</div>
 
 <script>
-function hack() {
-  document.getElementById("result").innerHTML = ">>> Accessing mainframe...";
+// Matrix rain animation
+const canvas = document.getElementById("matrix");
+const ctx = canvas.getContext("2d");
+
+canvas.height = window.innerHeight;
+canvas.width = window.innerWidth;
+
+const letters = "01ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+const fontSize = 16;
+const columns = canvas.width / fontSize;
+
+const drops = [];
+
+for(let i = 0; i < columns; i++) {
+  drops[i] = 1;
+}
+
+function draw() {
+  ctx.fillStyle = "rgba(0,0,0,0.05)";
+  ctx.fillRect(0,0,canvas.width,canvas.height);
+
+  ctx.fillStyle = "#00ff00";
+  ctx.font = fontSize + "px monospace";
+
+  for(let i = 0; i < drops.length; i++) {
+    const text = letters[Math.floor(Math.random()*letters.length)];
+    ctx.fillText(text, i*fontSize, drops[i]*fontSize);
+
+    if(drops[i]*fontSize > canvas.height && Math.random() > 0.975)
+      drops[i] = 0;
+
+    drops[i]++;
+  }
+}
+
+setInterval(draw, 33);
+
+// Hack button
+function startHack() {
+  document.getElementById("output").innerHTML =
+  "> Connecting...<br>> Bypassing firewall...<br>> Access Granted ✔";
 }
 </script>
-  
-  <p>> Encrypting data...</p>
-<p>> Bypassing firewall...</p>
-<p>> Access granted</p>
-  
 
 </body>
 </html>
